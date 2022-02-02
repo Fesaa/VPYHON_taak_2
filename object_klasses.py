@@ -32,7 +32,12 @@ class CelestialBody:
         @param mother_radius: Orbit radius around the mother of the satellite.
         """
         self.name = name
-        self.r = radius * 10
+        if 0 < radius < 10000000:
+            self.r = radius * 1000
+        elif 10000000 < radius < 100000000:
+            self.r = radius * 250
+        else:
+            self.r = radius * 50
         self.colour = colour
         self.mass = mass
         self.orbit_r = orbit_r

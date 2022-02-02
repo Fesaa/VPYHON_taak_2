@@ -2,7 +2,7 @@
 # Planets:     <Name>, <OrbitRad>, <BodyRad>, <Mass>, <OrbitVel>, <Color>
 # Moons: Moon, <Name>, <OrbitRad>, <BodyRad>, <Mass>, <OrbitVel>, <Color>
 Sun,                        695000000, 1.989E+030,          yellow
-Mercury,       57900000000,   244000000, 3.33E+023,    47900, white
+Mercury,       57900000000,   2440000, 3.33E+023,    47900, white
 Venus,        108000000000,   6050000, 4.869E+024,   35000, orange
 Earth,        150000000000,   6378140, 5.976E+024,   29800, blue
 #Moon, Moon,         385000,   1737000, 7.3477E+022,   1022, gray
