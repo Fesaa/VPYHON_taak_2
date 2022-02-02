@@ -1,4 +1,5 @@
 from vpython import sphere, color, vector, canvas, norm, mag, rate
+from typing import Union
 
 COLOUR_SWITCH = {
     'yellow': color.yellow,
@@ -18,19 +19,31 @@ class CelestialBody:
     """
 
     def __init__(self, name: str, radius: float, mass: float, colour: str, v: float = 0, orbit_r: float = 0,
-                 mother: str = None, mother_radius: float = 0):
-        self.name = str(name)
-        self.r = float(radius)
+                 mother=None, mother_radius: float = 0):
+        """
+        Creates a CelestialBody instance.
+        @param name: Name of the body
+        @param radius: Radius of the sphere representing the body
+        @param mass: Mass of the body
+        @param colour: Colour of the body, only single  colours are supported.
+        @param v: Initial velocity of the body
+        @param orbit_r: Orbit radius around the star. The star has an orbit radius of 0, does not have to be specified.
+        @param mother: Orbiting body for a satellite.
+        @param mother_radius: Orbit radius around the mother of the satellite.
+        """
+        self.name = name
+        self.r = radius * 10
         self.colour = colour
-        self.mass = float(mass)
-        self.orbit_r = float(orbit_r)
-        self.v = float(v)
+        self.mass = mass
+        self.orbit_r = orbit_r
+        self.v = v
         self.mother = mother
-        self.mother_radius = float(mother_radius)
+        self.mother_radius = mother_radius
 
     def __str__(self):
         return_str = f'Celestial body: \n' \
                      f'Name: {self.name} \n' \
+                     f'Radius: {self.r} \n' \
                      f'Orbital radius: {self.orbit_r} \n' \
                      f'Velocity: {self.v} ' \
                      f'Mass: {self.mass}, colour: {self.colour}'
@@ -58,6 +71,13 @@ class StarSystem:
     """
 
     def __init__(self, celestial_bodies: list, title: str, grav_constant: float = - 6.6742 * 10 ** (-11)):
+        """
+        Creates the StarSystem instance. Build upon CelestialBody
+        @param celestial_bodies: List of all CelestialBody's in the star system. The first item in the list
+         will be the star.
+        @param title: Title of the windows opened by vpython
+        @param grav_constant: The gravitational constant of the universe. Will default to Newtons constant.
+        """
         bodies = []
 
         for body in celestial_bodies:
@@ -87,7 +107,11 @@ class StarSystem:
         self.canvas = canvas(title=title, background=color.black)
 
     def move(self, dt):
-
+        """
+        Move functions, iterates over all object but the star.
+        @param dt: time moved
+        @return: None
+        """
         for body in self.celestial_bodies[1::]:
             CB = body.celestial_body
             CB: CelestialBody
@@ -100,6 +124,12 @@ class StarSystem:
                 body.pos += body.p * dt / CB.mass
 
     def start(self, n, dt):
+        """
+        Start movement of the star system
+        @param n: Amount of times the time passes
+        @param dt: Amount of time that passes per movement update (*1000 due to rate)
+        @return: None
+        """
         t = 0
 
         while t < n:

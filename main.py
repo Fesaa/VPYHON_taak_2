@@ -5,7 +5,7 @@ from object_klasses import StarSystem
 def main():
     solar_system = StarSystem(planets_from_file(), "Our Solar System")
 
-    solar_system.start(24 * 3600, 360)
+    solar_system.start(24 * 60 * 60, 60)
 
 
 if __name__ == '__main__':
