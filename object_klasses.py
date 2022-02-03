@@ -19,7 +19,7 @@ class CelestialBody:
     """
 
     def __init__(self, name: str, radius: float, mass: float, colour: str, v: float = 0, orbit_r: float = 0,
-                 mother=None, mother_radius: float = 0):
+                 mother=None, mother_radius: float = 0, scaling: bool = False):
         """
         Creates a CelestialBody instance.
         @param name: Name of the body
@@ -30,14 +30,19 @@ class CelestialBody:
         @param orbit_r: Orbit radius around the star. The star has an orbit radius of 0, does not have to be specified.
         @param mother: Orbiting body for a satellite.
         @param mother_radius: Orbit radius around the mother of the satellite.
+        @param scaling: Scale radius up for better visibility. Recommended if there are very large differences in radia
+         or large distances between bodies
         """
         self.name = name
-        if 0 < radius < 10000000:
-            self.r = radius * 1000
-        elif 10000000 < radius < 100000000:
-            self.r = radius * 250
+        if scaling:
+            if 0 < radius < 10000000:
+                self.r = radius * 1000
+            elif radius < 100000000:
+                self.r = radius * 250
+            else:
+                self.r = radius * 50
         else:
-            self.r = radius * 50
+            self.r = radius
         self.colour = colour
         self.mass = mass
         self.orbit_r = orbit_r
@@ -132,7 +137,7 @@ class StarSystem:
         """
         Start movement of the star system
         @param n: Amount of times the time passes
-        @param dt: Amount of time that passes per movement update (*1000 due to rate)
+        @param dt: Amount of time that passes per movement update (*1000 due to vpython.rate())
         @return: None
         """
         t = 0
